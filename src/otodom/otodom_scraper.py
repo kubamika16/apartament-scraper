@@ -1,6 +1,7 @@
 from src.utils import fetch_page_content, extract_json_data
+from src.config import ScrapeConfig
 
-# Constants
+# Constants for Otodom
 BASE_URL = 'https://www.otodom.pl/pl/oferta/'
 
 # Function to process individual listings
@@ -32,8 +33,11 @@ def print_listing_details(listing_details):
     print('-' * 40)
 
 # Main function to scrape the listings
-def scrape_listings(url):
+def scrape_otodom_listings(scrape_config: ScrapeConfig):
     try:
+        # Build the URL using the provided config
+        url = scrape_config.build_url()
+
         page_content = fetch_page_content(url)
         data = extract_json_data(page_content)
         listings = data['props']['pageProps']['data']['searchAds']['items']
